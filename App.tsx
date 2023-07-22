@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as SplashScreen from 'expo-splash-screen';
-import Home from './src/Home';
-import Login from './src/Login';
+import Home from './src/pages/Home';
+import Login from './src/pages/Login';
+import Register from './src/pages/Register';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -37,7 +38,7 @@ export default function App() {
 
   return (
     <NavigationContainer onReady={onLayoutRootView}>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{headerShown:false}}>
         <Stack.Screen
           name="Login"
           component={Login}
@@ -45,6 +46,10 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={Home}
+        />
+        <Stack.Screen
+          name="Register"
+          component={Register}
         />
       </Stack.Navigator>
     </NavigationContainer>

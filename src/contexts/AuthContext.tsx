@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-root-toast";
 import { User, UserCredential, createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
+import { isEmptyObject } from "../utils/common";
 
 // Define the types for the AuthContext
 type AuthContextType = {
@@ -29,8 +30,8 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
   useEffect(() => {
     const checkLoggedInUser = async () => {
       try {
-        const storedUser = JSON.parse((await AsyncStorage.getItem("user")) || "{}");
-        if (storedUser) {
+        const storedUser = JSON.parse((await AsyncStorage.getItem("user") || "{}"));
+        if (!isEmptyObject(storedUser)) {
           setUser(storedUser);
           //@ts-ignore
           navigation.navigate('Home')

@@ -32,6 +32,8 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
         const storedUser = JSON.parse((await AsyncStorage.getItem("user")) || "{}");
         if (storedUser) {
           setUser(storedUser);
+          //@ts-ignore
+          navigation.navigate('Home')
         }
       } catch (error) {
         console.error("Error retrieving user from AsyncStorage:", error);

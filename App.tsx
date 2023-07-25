@@ -3,13 +3,17 @@ import { RootSiblingParent } from "react-native-root-siblings";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as SplashScreen from "expo-splash-screen";
-import Home from "./src/pages/Home";
 import Login from "./src/pages/Login";
 import Register from "./src/pages/Register";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { config } from "./config";
 import { AuthProvider } from "./src/contexts/AuthContext";
+import Profile from "./src/pages/Profile";
+import Home from "./src/pages/Home";
+import Guest from "./src/pages/Guest";
+import Organizer from "./src/pages/Organizer";
+import CreateEvent from "./src/pages/CreateEvent";
 
 const firebaseConfig = {
   apiKey: config.FIREBASE_API_KEY,
@@ -59,8 +63,12 @@ export default function App() {
         <AuthProvider>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="Guest" component={Guest} />
+            <Stack.Screen name="Organizer" component={Organizer} />
+            <Stack.Screen name="CreateEvent" component={CreateEvent} />
           </Stack.Navigator>
         </AuthProvider>
       </NavigationContainer>

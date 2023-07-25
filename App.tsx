@@ -8,7 +8,8 @@ import Login from "./src/pages/Login";
 import Register from "./src/pages/Register";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import {config} from './config'
+import { config } from "./config";
+import { AuthProvider } from "./src/contexts/AuthContext";
 
 const firebaseConfig = {
   apiKey: config.FIREBASE_API_KEY,
@@ -55,11 +56,13 @@ export default function App() {
   return (
     <RootSiblingParent>
       <NavigationContainer onReady={onLayoutRootView}>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Register" component={Register} />
-        </Stack.Navigator>
+        <AuthProvider>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Register" component={Register} />
+          </Stack.Navigator>
+        </AuthProvider>
       </NavigationContainer>
     </RootSiblingParent>
   );

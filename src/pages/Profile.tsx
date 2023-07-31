@@ -8,9 +8,10 @@ import { AntDesign } from "@expo/vector-icons";
 import ImageUploader from "../components/ImageUploader";
 import TextFieldLabel from "../components/TextFieldLabel";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { saveFullUser } from "../utils/firestore";
+import { refetchUser, saveFullUser } from "../utils/firestore";
 import Toast from "react-native-root-toast";
 import { FullUser } from "../models/userModel";
+import { User } from "firebase/auth";
 
 export default function Profile() {
   const navigation = useNavigation();
@@ -23,8 +24,6 @@ export default function Profile() {
   const [gender, setGender] = React.useState(user?.gender);
   const [dateOfBirth, setDateOfBirth] = React.useState(user?.dateOfBirth);
   const [show, setShow] = React.useState(false);
-
-  console.log(user)
 
   const handleEdit = async () => {
 
@@ -67,6 +66,8 @@ export default function Profile() {
         backgroundColor: "white",
         position: Toast.positions.TOP,
       });
+
+      await refetchUser(user as User)
 
       Toast.show('Successfully updated user', {
         duration: 3000,

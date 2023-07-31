@@ -114,7 +114,7 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
             });
             if(firstTime){
               //@ts-ignore
-              navigation.navigate('Profile')
+              return navigation.navigate('Profile')
             }
             //@ts-ignore
             navigation.navigate("Home");

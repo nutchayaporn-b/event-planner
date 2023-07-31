@@ -101,7 +101,7 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
               });
             });
         }
-        await initUser(user);
+        const firstTime = await initUser(user);
         const fullUser = await getFullUser(user);
         setUser(fullUser);
         AsyncStorage.setItem("user", JSON.stringify(fullUser))
@@ -112,10 +112,14 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
               backgroundColor: "white",
               position: Toast.positions.TOP,
             });
+            if(firstTime){
+              //@ts-ignore
+              navigation.navigate('Profile')
+            }
+            //@ts-ignore
+            navigation.navigate("Home");
           })
           .catch((error) => console.error("Error storing user in AsyncStorage:", error));
-        //@ts-ignore
-        navigation.navigate("Home");
       })
       .catch((error: any) => {
         console.log(error);

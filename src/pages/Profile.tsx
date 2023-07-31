@@ -91,7 +91,7 @@ export default function Profile() {
   return (
     <View className="flex-1 justify-center items-center">
       <IconButton
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.goBack()}
         icon={<AntDesign name="left" size={24} color="white" />}
         buttonClassName="px-2 py-2 bg-primary-800 rounded-full absolute top-16 left-8"
       />

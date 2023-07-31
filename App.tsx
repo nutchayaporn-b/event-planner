@@ -7,6 +7,7 @@ import Login from "./src/pages/Login";
 import Register from "./src/pages/Register";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import {getFirestore} from 'firebase/firestore'
 import { config } from "./config";
 import { AuthProvider } from "./src/contexts/AuthContext";
 import Profile from "./src/pages/Profile";
@@ -27,6 +28,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+export const db = getFirestore(app);
 
 SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();

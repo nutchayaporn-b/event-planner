@@ -4,10 +4,12 @@ import Toast from "react-native-root-toast";
 import { User, UserCredential, createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { isEmptyObject } from "../utils/common";
+import { getFullUser, initUser } from "../utils/firestore";
+import { FullUser } from "../models/userModel";
 
 // Define the types for the AuthContext
 type AuthContextType = {
-  user: User | null;
+  user: FullUser | null;
   handleRegister: (username: string, password: string) => void;
   handleLogin: (username: string, password: string) => void;
   handleLogout: () => void;
@@ -25,7 +27,7 @@ const AuthContext = createContext<AuthContextType>({
 export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
   const navigation = useNavigation();
   const auth = getAuth();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<FullUser | null>(null);
   // Check if the user is already logged in
   useEffect(() => {
     const checkLoggedInUser = async () => {
@@ -77,7 +79,7 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
         position: Toast.positions.TOP,
       });
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential: UserCredential) => {
+      .then(async (userCredential: UserCredential) => {
         const user = userCredential.user;
         if (user.emailVerified === false) {
           return sendEmailVerification(user)
@@ -99,9 +101,11 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
               });
             });
         }
-        AsyncStorage.setItem("user", JSON.stringify(user))
-          .then(() => {
-            setUser(user);
+        await initUser(user);
+        const fullUser = await getFullUser(user);
+        setUser(fullUser);
+        AsyncStorage.setItem("user", JSON.stringify(fullUser))
+          .then(async () => {
             Toast.show("Welcome: " + user.email, {
               duration: 1000,
               textColor: "green",
@@ -130,6 +134,8 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
     AsyncStorage.removeItem("user")
       .then(() => {
         setUser(null);
+        //@ts-ignore
+        navigation.navigate("Login")
         Toast.show("Successfully logout!", {
           duration: 1000,
           textColor: "green",

@@ -42,6 +42,7 @@ export async function saveFullUser(user: FullUser) {
       dateOfBirth: user.dateOfBirth,
       gender: user.gender,
     });
+    await refetchUser(user)
     return true;
   }
   return false;
@@ -54,4 +55,5 @@ export async function refetchUser(user: User) {
       console.log("Refetch user");
     })
     .catch((error) => console.error("Error storing user in AsyncStorage:", error));
+  return newUser;
 }

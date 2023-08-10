@@ -19,7 +19,7 @@ export default function TextFieldLabel({label, placeholder = '', setValue, value
         onChangeText={(text) => setValue(text)}
         placeholder={placeholder}
         placeholderTextColor={'#9E9A96'}
-        className='border-none outline-none py-1 border-b-2 border-solid border-black'
+        className='border-none outline-none py-1 border-b-2 border-solid border-black text-black'
       />
     </View>
   )

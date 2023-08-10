@@ -15,6 +15,9 @@ import Home from "./src/pages/Home";
 import Guest from "./src/pages/Guest";
 import Organizer from "./src/pages/Organizer";
 import CreateEvent from "./src/pages/CreateEvent";
+import { enGB, registerTranslation } from 'react-native-paper-dates'
+import Test from "./src/pages/Test";
+registerTranslation('en-GB', enGB)
 
 const firebaseConfig = {
   apiKey: config.FIREBASE_API_KEY,
@@ -71,6 +74,7 @@ export default function App() {
             <Stack.Screen name="Guest" component={Guest} />
             <Stack.Screen name="Organizer" component={Organizer} />
             <Stack.Screen name="CreateEvent" component={CreateEvent} />
+            <Stack.Screen name="Test" component={Test}/>
           </Stack.Navigator>
         </AuthProvider>
       </NavigationContainer>

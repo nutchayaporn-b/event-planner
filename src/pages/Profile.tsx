@@ -8,22 +8,37 @@ import { AntDesign } from "@expo/vector-icons";
 import ImageUploader from "../components/ImageUploader";
 import TextFieldLabel from "../components/TextFieldLabel";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { refetchUser, saveFullUser } from "../utils/firestore";
+import { refetchUser, saveFullUser } from "../services/userService";
 import Toast from "react-native-root-toast";
 import { FullUser } from "../models/userModel";
 import { User } from "firebase/auth";
+import { DatePickerModal } from 'react-native-paper-dates';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Profile() {
   const navigation = useNavigation();
-  const { user, handleLogout } = useAuth();
+  const { user, handleLogout, reValidateUser } = useAuth();
 
   const [image, setImage] = React.useState(user?.photoURL || "https://placehold.co/600x400/png");
   const [isEdit, setIsEdit] = React.useState(false);
   const [firstName, setFirstName] = React.useState(user?.firstName);
   const [lastName, setLastName] = React.useState(user?.lastName);
   const [gender, setGender] = React.useState(user?.gender);
-  const [dateOfBirth, setDateOfBirth] = React.useState(user?.dateOfBirth);
-  const [show, setShow] = React.useState(false);
+
+  const [date, setDate] = React.useState<Date | undefined>(new Date(user!.dateOfBirth));
+  const [open, setOpen] = React.useState(false);
+
+  const onDismissSingle = React.useCallback(() => {
+    setOpen(false);
+  }, [setOpen]);
+
+  const onConfirmSingle = React.useCallback(
+    (params: any) => {
+      setOpen(false);
+      setDate(params.date);
+    },
+    [setOpen, setDate]
+  );
 
   const handleEdit = async () => {
 
@@ -48,6 +63,13 @@ export default function Profile() {
       position: Toast.positions.TOP,
     });
 
+    if(!date) return Toast.show('Date cannot be blank', {
+      duration: 3000,
+      textColor: "red",
+      backgroundColor: "white",
+      position: Toast.positions.TOP,
+    });
+
     try{
 
       const result = await saveFullUser({
@@ -55,7 +77,7 @@ export default function Profile() {
         firstName,
         lastName,
         gender,
-        dateOfBirth: new Date().toDateString(),
+        dateOfBirth: date?.toDateString() || new Date().toDateString(),
         photoURL: image
       } as FullUser)
       setIsEdit(false);
@@ -67,7 +89,7 @@ export default function Profile() {
         position: Toast.positions.TOP,
       });
 
-      await refetchUser(user as User)
+      await reValidateUser(user as User)
 
       Toast.show('Successfully updated user', {
         duration: 3000,
@@ -89,7 +111,7 @@ export default function Profile() {
   };
 
   return (
-    <View className="flex-1 justify-center items-center">
+    <SafeAreaView className="flex-1 justify-center items-center">
       <IconButton
         onPress={() => navigation.goBack()}
         icon={<AntDesign name="left" size={24} color="white" />}
@@ -112,23 +134,24 @@ export default function Profile() {
         <View className="flex mb-5">
           <TextFieldLabel label="Gender" isEdit={isEdit} value={gender} setValue={setGender} />
         </View>
-        {/* <View className="flex mb-5">
-          <Pressable onPress={() => setShow(true)}>
+        <View className="flex mb-5">
+          <Pressable onPress={() => isEdit && setOpen(true)}>
             <TextFieldLabel
-              label="Date Of Birth (Optional)"
-              value={dateOfBirth}
-              setValue={setDateOfBirth}
+              label="Date Of Birth"
+              value={new Date(date!)?.toDateString()}
+              setValue={setDate}
               isEdit={false}
             />
           </Pressable>
-          {show && (
-            <DateTimePicker
-              value={new Date()}
-              // onChange={onChange}
-              disabled={!isEdit}
-            />
-          )}
-        </View> */}
+          <DatePickerModal
+          locale="en"
+          mode="single"
+          visible={open}
+          onDismiss={onDismissSingle}
+          date={date}
+          onConfirm={onConfirmSingle}
+        />
+        </View>
       </View>
       {isEdit ? (
         <BasicButton
@@ -147,6 +170,6 @@ export default function Profile() {
           Logout
         </BasicButton>
       )}
-    </View>
+    </SafeAreaView>
   );
 }

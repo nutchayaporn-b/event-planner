@@ -4,7 +4,7 @@ import Toast from "react-native-root-toast";
 import { User, UserCredential, createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { isEmptyObject } from "../utils/common";
-import { getFullUser, initUser } from "../utils/firestore";
+import { getFullUser, initUser, refetchUser } from "../services/userService";
 import { FullUser } from "../models/userModel";
 
 // Define the types for the AuthContext
@@ -13,6 +13,7 @@ type AuthContextType = {
   handleRegister: (username: string, password: string) => void;
   handleLogin: (username: string, password: string) => void;
   handleLogout: () => void;
+  reValidateUser: (user: User) => void;
 };
 
 // Create the AuthContext
@@ -21,6 +22,7 @@ const AuthContext = createContext<AuthContextType>({
   handleRegister: () => {},
   handleLogin: () => {},
   handleLogout: () => {},
+  reValidateUser: () => {},
 });
 
 // Implement the AuthProvider component
@@ -150,7 +152,12 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
       .catch((error) => console.error("Error removing user from AsyncStorage:", error));
   };
 
-  return <AuthContext.Provider value={{ user, handleRegister, handleLogin, handleLogout }}>{children}</AuthContext.Provider>;
+  const reValidateUser = async (user: User) => {
+    const newUser = await refetchUser(user);
+    setUser(newUser);
+  }
+
+  return <AuthContext.Provider value={{ user, handleRegister, handleLogin, handleLogout, reValidateUser }}>{children}</AuthContext.Provider>;
 };
 
 // Custom hook to access the AuthContext in components

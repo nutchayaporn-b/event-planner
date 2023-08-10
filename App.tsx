@@ -17,6 +17,7 @@ import Organizer from "./src/pages/Organizer";
 import CreateEvent from "./src/pages/CreateEvent";
 import { enGB, registerTranslation } from 'react-native-paper-dates'
 import Test from "./src/pages/Test";
+import Donate from "./src/pages/Donate";
 registerTranslation('en-GB', enGB)
 
 const firebaseConfig = {
@@ -74,6 +75,7 @@ export default function App() {
             <Stack.Screen name="Guest" component={Guest} />
             <Stack.Screen name="Organizer" component={Organizer} />
             <Stack.Screen name="CreateEvent" component={CreateEvent} />
+            <Stack.Screen name="Donate" component={Donate} />
             <Stack.Screen name="Test" component={Test}/>
           </Stack.Navigator>
         </AuthProvider>

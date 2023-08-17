@@ -26,7 +26,7 @@ export default function CreateEventImage() {
     setCreateEventState({ ...createEventState, image });
     try{
       const newEventId = await createEvent({...createEventState, image}, user?.uid as string)
-      return Toast.show(
+      Toast.show(
         "Create event id: " + newEventId,
         {
           duration: 3000,
@@ -35,6 +35,8 @@ export default function CreateEventImage() {
           position: Toast.positions.TOP,
         }
       );
+      //@ts-ignore
+      return navigation.navigate('Organizer');
     }catch(error:any){
       console.error(error);
     }

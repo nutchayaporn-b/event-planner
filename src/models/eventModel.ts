@@ -1,9 +1,11 @@
+import { Timestamp } from "firebase/firestore";
+
 export interface EventModel {
   id?: string;
   type?: EventType;
   name?: string;
   description?: string;
-  date?: Date;
+  date?: Timestamp;
   location?: {
     latitude: number;
     longitude: number;
@@ -11,8 +13,8 @@ export interface EventModel {
     longitudeDelta: number;
   };
   image?: string;
-  createdAt?: Date;
-  modifiedAt?: Date;
+  createdAt?: Timestamp;
+  modifiedAt?: Timestamp;
 }
 
 export type EventType = "Regular" | "Private";

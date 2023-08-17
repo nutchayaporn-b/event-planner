@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
-export interface ImageUploaderProps {
+export interface ImageUploader2Props {
   image: string;
   setImage: React.Dispatch<React.SetStateAction<string>>;
   isEdit?: boolean;
   render: React.ReactNode;
 }
 
-export default function ImageUploader({
+export default function ImageUploader2({
   image = "https://placehold.co/600x400/png",
   setImage,
   isEdit = true,
@@ -31,16 +31,16 @@ export default function ImageUploader({
   };
 
   return (
-    <View className="rounded-full w-40 h-40 mt-2 mb-2">
+    <>
       <Pressable onPress={isEdit ? pickImage : undefined}>
         {image && (
           <Image
             source={{ uri: image }}
-            className="rounded-full w-full h-full object-contain"
+            className="w-[300px] h-[400px] object-contain"
           />
         )}
       </Pressable>
-      {isEdit && <Pressable onPress={() => pickImage()}>{render}</Pressable>}
-    </View>
+      {!image && isEdit && <Pressable onPress={() => pickImage()}>{render}</Pressable>}
+    </>
   );
 }

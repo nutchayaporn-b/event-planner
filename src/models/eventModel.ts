@@ -1,11 +1,16 @@
 export interface EventModel {
-  id: string;
-  type: EventType
-  name: string;
-  description: string;
+  id?: string;
+  type?: EventType;
+  name?: string;
+  description?: string;
   date?: Date;
-  location: string;
-  image: string;
+  location?: {
+    latitude: number;
+    longitude: number;
+    latitudeDelta: number;
+    longitudeDelta: number;
+  };
+  image?: string;
 }
 
-export type EventType = "Regular" | "Private"
+export type EventType = "Regular" | "Private";

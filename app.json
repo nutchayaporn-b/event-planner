@@ -12,6 +12,12 @@
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
       ]
     ],
     "splash": {
@@ -23,7 +29,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.company.eventplanner",
+      "config": {
+        "googleMapsApiKey": "AIzaSyDE5i_PUQW0h1j88khenW1ufG8doH4ULUw"
+      }
     },
     "android": {
       "adaptiveIcon": {

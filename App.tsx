@@ -7,7 +7,7 @@ import Login from "./src/pages/Login";
 import Register from "./src/pages/Register";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import {getFirestore} from 'firebase/firestore'
+import { getFirestore } from "firebase/firestore";
 import { config } from "./config";
 import { AuthProvider } from "./src/contexts/AuthContext";
 import Profile from "./src/pages/Profile";
@@ -15,10 +15,12 @@ import Home from "./src/pages/Home";
 import Guest from "./src/pages/Guest";
 import Organizer from "./src/pages/Organizer";
 import CreateEvent from "./src/pages/CreateEvent";
-import { enGB, registerTranslation } from 'react-native-paper-dates'
+import { enGB, registerTranslation } from "react-native-paper-dates";
 import Test from "./src/pages/Test";
 import Donate from "./src/pages/Donate";
-registerTranslation('en-GB', enGB)
+import { RecoilRoot } from "recoil";
+import CreateEventImage from "./src/pages/CreateEventImage";
+registerTranslation("en-GB", enGB);
 
 const firebaseConfig = {
   apiKey: config.FIREBASE_API_KEY,
@@ -64,22 +66,25 @@ export default function App() {
   }
 
   return (
-    <RootSiblingParent>
-      <NavigationContainer onReady={onLayoutRootView}>
-        <AuthProvider>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Profile" component={Profile} />
-            <Stack.Screen name="Guest" component={Guest} />
-            <Stack.Screen name="Organizer" component={Organizer} />
-            <Stack.Screen name="CreateEvent" component={CreateEvent} />
-            <Stack.Screen name="Donate" component={Donate} />
-            <Stack.Screen name="Test" component={Test}/>
-          </Stack.Navigator>
-        </AuthProvider>
-      </NavigationContainer>
-    </RootSiblingParent>
+    <RecoilRoot>
+      <RootSiblingParent>
+        <NavigationContainer onReady={onLayoutRootView}>
+          <AuthProvider>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Register" component={Register} />
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="Profile" component={Profile} />
+              <Stack.Screen name="Guest" component={Guest} />
+              <Stack.Screen name="Organizer" component={Organizer} />
+              <Stack.Screen name="CreateEvent" component={CreateEvent} />
+              <Stack.Screen name="Donate" component={Donate} />
+              <Stack.Screen name="Test" component={Test} />
+              <Stack.Screen name="CreateEventImage" component={CreateEventImage}/>
+            </Stack.Navigator>
+          </AuthProvider>
+        </NavigationContainer>
+      </RootSiblingParent>
+    </RecoilRoot>
   );
 }

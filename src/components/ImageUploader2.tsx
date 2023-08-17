@@ -32,11 +32,11 @@ export default function ImageUploader2({
 
   return (
     <>
-      <Pressable onPress={isEdit ? pickImage : undefined}>
+      <Pressable onPress={isEdit ? pickImage : undefined} className="mt-4 mb-4">
         {image && (
           <Image
             source={{ uri: image }}
-            className="w-[300px] h-[400px] object-contain"
+            className="w-[300px] h-[450px] object-cover"
           />
         )}
       </Pressable>

@@ -11,6 +11,8 @@ export interface EventModel {
     longitudeDelta: number;
   };
   image?: string;
+  createdAt?: Date;
+  modifiedAt?: Date;
 }
 
 export type EventType = "Regular" | "Private";

@@ -15,12 +15,12 @@ import Home from "./src/pages/Home";
 import Guest from "./src/pages/Guest";
 import Organizer from "./src/pages/Organizer";
 import CreateEvent from "./src/pages/CreateEvent";
-import { enGB, registerTranslation } from "react-native-paper-dates";
+import { en, registerTranslation } from "react-native-paper-dates";
 import Test from "./src/pages/Test";
 import Donate from "./src/pages/Donate";
 import { RecoilRoot } from "recoil";
 import CreateEventImage from "./src/pages/CreateEventImage";
-registerTranslation("en-GB", enGB);
+registerTranslation("en", en);
 
 const firebaseConfig = {
   apiKey: config.FIREBASE_API_KEY,

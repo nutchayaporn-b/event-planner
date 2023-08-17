@@ -1,7 +1,14 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-root-toast";
-import { User, UserCredential, createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  User,
+  UserCredential,
+  createUserWithEmailAndPassword,
+  getAuth,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { isEmptyObject } from "../utils/common";
 import { getFullUser, initUser, refetchUser } from "../services/userService";
@@ -34,11 +41,13 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
   useEffect(() => {
     const checkLoggedInUser = async () => {
       try {
-        const storedUser = JSON.parse((await AsyncStorage.getItem("user") || "{}"));
+        const storedUser = JSON.parse(
+          (await AsyncStorage.getItem("user")) || "{}"
+        );
         if (!isEmptyObject(storedUser)) {
           setUser(storedUser);
           //@ts-ignore
-          navigation.navigate('Home')
+          navigation.navigate("Home");
         }
       } catch (error) {
         console.error("Error retrieving user from AsyncStorage:", error);
@@ -48,21 +57,53 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
   }, []);
 
   const handleRegister = (email: string, password: string) => {
-    if(!email) return Toast.show("Email cannot be empty", {duration: 1000, textColor: 'red', backgroundColor:'white', position: Toast.positions.TOP})
-    if(!password) return Toast.show("Password cannot be empty", {duration: 1000, textColor: 'red', backgroundColor:'white', position: Toast.positions.TOP})
-    createUserWithEmailAndPassword(auth, email, password).then((userCredential:UserCredential) => {
-      const user = userCredential.user;
-      if(user.emailVerified === false) {
-        return sendEmailVerification(user).then(() => {
-          return Toast.show('Please verify your email sent to: ' + user.email, {duration:3000, textColor: 'green', backgroundColor:'white', position: Toast.positions.TOP})
-        })
-      }
-      Toast.show('Successfully register your account', {duration:1000, textColor: 'green', backgroundColor:'white', position: Toast.positions.TOP})
-    }).catch((error:any) => {
-      console.log(error)
-      Toast.show(error.message, {duration: 3000, textColor: 'red', backgroundColor:'white', position: Toast.positions.TOP})
-    })
-  }
+    if (!email)
+      return Toast.show("Email cannot be empty", {
+        duration: 1000,
+        textColor: "red",
+        backgroundColor: "white",
+        position: Toast.positions.TOP,
+      });
+    if (!password)
+      return Toast.show("Password cannot be empty", {
+        duration: 1000,
+        textColor: "red",
+        backgroundColor: "white",
+        position: Toast.positions.TOP,
+      });
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential: UserCredential) => {
+        const user = userCredential.user;
+        if (user.emailVerified === false) {
+          return sendEmailVerification(user).then(() => {
+            return Toast.show(
+              "Please verify your email sent to: " + user.email,
+              {
+                duration: 3000,
+                textColor: "green",
+                backgroundColor: "white",
+                position: Toast.positions.TOP,
+              }
+            );
+          });
+        }
+        Toast.show("Successfully register your account", {
+          duration: 1000,
+          textColor: "green",
+          backgroundColor: "white",
+          position: Toast.positions.TOP,
+        });
+      })
+      .catch((error: any) => {
+        console.log(error);
+        Toast.show(error.message, {
+          duration: 3000,
+          textColor: "red",
+          backgroundColor: "white",
+          position: Toast.positions.TOP,
+        });
+      });
+  };
 
   // Login function
   const handleLogin = (email: string, password: string) => {
@@ -86,12 +127,15 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
         if (user.emailVerified === false) {
           return sendEmailVerification(user)
             .then(() => {
-              return Toast.show("Please verify your email! sent to: " + user.email, {
-                duration: 3000,
-                textColor: "red",
-                backgroundColor: "white",
-                position: Toast.positions.TOP,
-              });
+              return Toast.show(
+                "Please verify your email! sent to: " + user.email,
+                {
+                  duration: 3000,
+                  textColor: "red",
+                  backgroundColor: "white",
+                  position: Toast.positions.TOP,
+                }
+              );
             })
             .catch((error: any) => {
               console.log(error);
@@ -114,14 +158,16 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
               backgroundColor: "white",
               position: Toast.positions.TOP,
             });
-            if(firstTime){
+            if (firstTime) {
               //@ts-ignore
-              return navigation.navigate('Profile')
+              return navigation.navigate("Profile");
             }
             //@ts-ignore
             navigation.navigate("Home");
           })
-          .catch((error) => console.error("Error storing user in AsyncStorage:", error));
+          .catch((error) =>
+            console.error("Error storing user in AsyncStorage:", error)
+          );
       })
       .catch((error: any) => {
         console.log(error);
@@ -141,7 +187,7 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
       .then(() => {
         setUser(null);
         //@ts-ignore
-        navigation.navigate("Login")
+        navigation.navigate("Login");
         Toast.show("Successfully logout!", {
           duration: 1000,
           textColor: "green",
@@ -149,15 +195,29 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
           position: Toast.positions.TOP,
         });
       })
-      .catch((error) => console.error("Error removing user from AsyncStorage:", error));
+      .catch((error) =>
+        console.error("Error removing user from AsyncStorage:", error)
+      );
   };
 
   const reValidateUser = async (user: User) => {
     const newUser = await refetchUser(user);
     setUser(newUser);
-  }
+  };
 
-  return <AuthContext.Provider value={{ user, handleRegister, handleLogin, handleLogout, reValidateUser }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        handleRegister,
+        handleLogin,
+        handleLogout,
+        reValidateUser,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 // Custom hook to access the AuthContext in components

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import IconButton from "../components/IconButton";
@@ -14,18 +14,42 @@ import { createEvent } from "../services/eventService";
 import { useAuth } from "../contexts/AuthContext";
 import { EventModel } from "../models/eventModel";
 import Toast from "react-native-root-toast";
+import { useQueryClient } from "@tanstack/react-query/build/lib/QueryClientProvider";
+import * as Location from "expo-location";
 
 export default function CreateEventImage() {
+  const queryClient = useQueryClient();
   const navigation = useNavigation();
   const {user} = useAuth()
   const [image, setImage] = useState("");
   const [createEventState, setCreateEventState] =
     useRecoilState(createEventStore);
 
+    const [location, setLocation] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+  
+    useEffect(() => {
+      (async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          setErrorMsg("Permission to access location was denied");
+        }
+
+        if(!createEventState) return
+  
+        let position = (
+          await Location.reverseGeocodeAsync({
+            latitude: createEventState.location?.latitude as number,
+            longitude: createEventState.location?.longitude as number,
+          })
+        )[0];
+        setLocation((position.city || position.region) + ", " + (position.district ? position.district  + ", " : "") + position.name + ", " + position.postalCode);
+      })();
+    }, []);
+
   const handleConfirm = async () => {
-    setCreateEventState({ ...createEventState, image });
     try{
-      const newEventId = await createEvent({...createEventState, image}, user?.uid as string)
+      const newEventId = await createEvent({...createEventState, image, locationName: location}, user?.uid as string)
       Toast.show(
         "Create event id: " + newEventId,
         {
@@ -35,6 +59,8 @@ export default function CreateEventImage() {
           position: Toast.positions.TOP,
         }
       );
+      setCreateEventState(null);
+      queryClient.invalidateQueries(['events'])
       //@ts-ignore
       return navigation.navigate('Organizer');
     }catch(error:any){

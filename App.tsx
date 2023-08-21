@@ -20,6 +20,8 @@ import Test from "./src/pages/Test";
 import Donate from "./src/pages/Donate";
 import { RecoilRoot } from "recoil";
 import CreateEventImage from "./src/pages/CreateEventImage";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ManageEvent from "./src/pages/ManageEvent";
 registerTranslation("en", en);
 
 const firebaseConfig = {
@@ -38,6 +40,8 @@ export const db = getFirestore(app);
 
 SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
+
+const queryClient = new QueryClient();
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -67,6 +71,7 @@ export default function App() {
 
   return (
     <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
       <RootSiblingParent>
         <NavigationContainer onReady={onLayoutRootView}>
           <AuthProvider>
@@ -81,10 +86,12 @@ export default function App() {
               <Stack.Screen name="Donate" component={Donate} />
               <Stack.Screen name="Test" component={Test} />
               <Stack.Screen name="CreateEventImage" component={CreateEventImage}/>
+              <Stack.Screen name="ManageEvent" component={ManageEvent}/>
             </Stack.Navigator>
           </AuthProvider>
         </NavigationContainer>
       </RootSiblingParent>
+      </QueryClientProvider>
     </RecoilRoot>
   );
 }

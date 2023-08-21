@@ -12,6 +12,7 @@ export interface EventModel {
     latitudeDelta: number;
     longitudeDelta: number;
   };
+  locationName?: string;
   image?: string;
   createdAt?: Timestamp;
   modifiedAt?: Timestamp;

@@ -6,4 +6,9 @@ const createEventStore = atom<EventModel | null>({
     default: null,
 })
 
-export {createEventStore};
+const selectEventStore = atom<EventModel | null>({
+    key: 'SelectEventStore',
+    default: null
+})
+
+export {createEventStore, selectEventStore};

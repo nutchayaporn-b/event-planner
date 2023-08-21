@@ -7,15 +7,17 @@ export interface TextFieldLabelProps {
   value: any;
   setValue: React.Dispatch<React.SetStateAction<any>>
   isEdit?: boolean
+  multiline?: boolean
 }
 
-export default function TextFieldLabel({label, placeholder = '', setValue, value, isEdit = true}: TextFieldLabelProps) {
+export default function TextFieldLabel({label, placeholder = '', setValue, value, isEdit = true, multiline=false}: TextFieldLabelProps) {
   return (
     <View className='flex'>
       {label && <Text className='mb-2 text-primary-100 font-semibold text-lg'>{label}</Text>}
       <TextInput
         editable={isEdit}
         value={value}
+        multiline={multiline}
         onChangeText={(text) => setValue(text)}
         placeholder={placeholder}
         placeholderTextColor={'#9E9A96'}

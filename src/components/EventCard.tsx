@@ -1,52 +1,66 @@
-import React, { useEffect, useState } from 'react'
-import {View, Text, Image} from 'react-native'
-import { EventModel } from '../models/eventModel'
-import { Ionicons } from '@expo/vector-icons';
-import moment from 'moment';
-import { EvilIcons } from '@expo/vector-icons';
-import * as Location from 'expo-location'
+import React, { useEffect, useState } from "react";
+import { View, Text, Image, Pressable } from "react-native";
+import { EventModel } from "../models/eventModel";
+import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
+import moment from "moment";
+import IconButton from "./IconButton";
+import * as Clipboard from "expo-clipboard";
+import Toast from "react-native-root-toast";
+import { useNavigation } from "@react-navigation/native";
+import { useRecoilState } from "recoil";
+import { selectEventStore } from "../stores/eventStore";
 
 export interface EventCardProps {
-  event: EventModel
+  event: EventModel;
 }
 
-export default function EventCard({event} : EventCardProps) {
+export default function EventCard({ event }: EventCardProps) {
 
-  const [location, setLocation] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+  const navigation = useNavigation();
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-      }
+  const [selectEventState, setSelectEventState] = useRecoilState(selectEventStore);
 
-      let position = (await Location.reverseGeocodeAsync({
-        latitude: event.location?.latitude as number,
-        longitude: event.location?.longitude as number,
-      }))[0];
-      setLocation(position.city + ", " + position.district + ", " + position.name)
-    })();
-  }, []);
+  const copyToClipboard = async () => {
+    Toast.show("Copy event code to clipboard", {
+      duration: 2000,
+      textColor: "green",
+      backgroundColor: "white",
+      position: Toast.positions.TOP,
+    });
+    await Clipboard.setStringAsync(event?.id || "");
+  };
+
+  const handleManageEvent = () => {
+    setSelectEventState(event)
+    navigation.navigate("ManageEvent" as never)
+  }
 
   return (
-    <View className='flex w-[95%] items-center border-b-2 py-4 border-primary-800 border-solid'>
-      {event.image && 
-        <Image
-          source={{uri: event.image}}
-          className='w-[300px] h-[300px] object-cover'
+    <View className="flex w-[95%] items-center border-b-2 py-4 border-primary-800 border-solid relative">
+      <Pressable onPress={() => handleManageEvent()}>
+        {event.image && <Image source={{ uri: event.image }} className="w-[300px] h-[300px] object-cover" />}
+      </Pressable>
+      {event.type === "Private" && 
+        <IconButton
+          icon={<EvilIcons name="share-apple" size={36} color="white" />}
+          buttonClassName="bg-primary-800 flex items-center justify-center rounded-full px-1 py-2 absolute right-[20px] top-24"
+          onPress={() => copyToClipboard()}
         />
       }
-      <View className='flex w-4/5'>
-        <Text className='text-primary-800 mt-4 text-xl font-semibold'>{event.name}</Text>
-        <Text className='text-primary-100 mt-2 text-lg mb-1'>{event.description}</Text>
-        <Text className='text-primary-100 text-lg mb-1'>{moment(event.date?.toDate()).format('MMMM Do YYYY')}</Text>
-        <View className='flex flex-row items-center'>
-          <EvilIcons name="location" size={32} color="black" className='mr-2' />
-          <Text className='text-primary-100 text-[14px'>{location}</Text>
+      <Pressable onPress={() => handleManageEvent()}>
+      <View className="flex w-4/5 relative">
+        {/* <IconButton icon={<AntDesign name="edit" size={24} color="black" />} buttonClassName="absolute right-0 top-6" onPress={() => navigation.navigate("EditEvent")} /> */}
+        <Text className="text-primary-800 mt-4 text-xl font-semibold">{event.name}</Text>
+        {event.description && <Text className="text-primary-100 mt-2 text-lg mb-1">{event.description}</Text>}
+        <Text className="text-primary-100 text-lg mb-1">{moment(event.date?.toDate()).format("MMMM Do YYYY")}</Text>
+        <View className="flex flex-row items-center">
+          <EvilIcons name="location" size={32} color="black" className="mr-2" />
+          <Text className="text-primary-100 text-[14px">{event.locationName}</Text>
         </View>
       </View>
+      </Pressable>
     </View>
-  )
+  );
 }

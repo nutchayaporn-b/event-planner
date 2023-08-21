@@ -10,17 +10,12 @@ import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { getEventsByUID } from "../services/eventService";
 import { EventModel } from "../models/eventModel";
+import { useQuery } from "@tanstack/react-query/build/lib/useQuery";
 
 export default function Organizer() {
   const navigation = useNavigation();
   const { user } = useAuth();
-  const [events, setEvents] = useState<EventModel[] | null>(null)
-  useEffect(() => {
-    (async () => {
-      const events = await getEventsByUID(user?.uid as string);
-      setEvents(events)
-    })();
-  }, []);
+  const {data: events, isLoading: isEventsLoading} = useQuery(['events'], () => getEventsByUID(user?.uid as string))
   return (
     <SafeAreaView>
       <ScrollView
@@ -31,20 +26,21 @@ export default function Organizer() {
         }}
       >
         <IconButton
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate("Home" as never)}
           icon={<AntDesign name="left" size={24} color="white" />}
           buttonClassName="px-2 py-2 bg-primary-800 rounded-full z-[9999] absolute top-2 left-8"
         />
+        {isEventsLoading && <Text>Loading...</Text>}
         {events && 
           events.map(e => (
-            <EventCard event={e}/>
+            <EventCard key={e.id} event={e}/>
           ))
         }
         <AddEventCard />
         <IconButton
           icon={<Ionicons name="person" size={24} color="white" />}
           buttonClassName="px-2 py-2 bg-primary-800 absolute top-2 right-8"
-          onPress={() => navigation.navigate("Profile")}
+          onPress={() => navigation.navigate("Profile" as never)}
         />
         <View className="h-8"></View>
       </ScrollView>

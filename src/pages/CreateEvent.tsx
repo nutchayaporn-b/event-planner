@@ -9,7 +9,6 @@ import { EventType } from "../models/eventModel";
 import TextFieldLabel from "../components/TextFieldLabel";
 import FormLabel from "../components/FormLabel";
 import { DatePickerModal } from "react-native-paper-dates";
-import { EvilIcons } from "@expo/vector-icons";
 import BasicButton from "../components/BasicButton";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
@@ -17,8 +16,8 @@ import { useRecoilState } from "recoil";
 import { createEventStore } from "../stores/eventStore";
 
 const initialRegion = {
-  latitude: 37.78825,
-  longitude: -122.4324,
+  latitude: 18.7999965,
+  longitude: 98.9498646,
   latitudeDelta: 0.0922,
   longitudeDelta: 0.0421,
 };
@@ -31,7 +30,7 @@ export default function CreateEvent() {
   const [typeOfEvent, setTypeOfEvent] = React.useState<EventType>(createEventState?.type || "Regular");
   const [eventName, setEventName] = React.useState(createEventState?.name || "");
   const [description, setDescription] = React.useState(createEventState?.description || "");
-
+  //@ts-ignore
   const [date, setDate] = React.useState<Date | undefined>(createEventState?.date || new Date());
   const [open, setOpen] = React.useState(false);
   const onDismissSingle = React.useCallback(() => {
@@ -89,6 +88,7 @@ export default function CreateEvent() {
       name: eventName,
       description: description,
       type: typeOfEvent,
+      //@ts-ignore
       date: date,
       location: markerPosition
     })

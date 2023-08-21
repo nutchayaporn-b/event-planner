@@ -22,6 +22,7 @@ import { RecoilRoot } from "recoil";
 import CreateEventImage from "./src/pages/CreateEventImage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ManageEvent from "./src/pages/ManageEvent";
+import CheckIn from "./src/pages/CheckIn";
 registerTranslation("en", en);
 
 const firebaseConfig = {
@@ -87,6 +88,7 @@ export default function App() {
               <Stack.Screen name="Test" component={Test} />
               <Stack.Screen name="CreateEventImage" component={CreateEventImage}/>
               <Stack.Screen name="ManageEvent" component={ManageEvent}/>
+              <Stack.Screen name="Check In" component={CheckIn}/>
             </Stack.Navigator>
           </AuthProvider>
         </NavigationContainer>

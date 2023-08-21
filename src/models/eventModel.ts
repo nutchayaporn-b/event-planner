@@ -18,4 +18,9 @@ export interface EventModel {
   modifiedAt?: Timestamp;
 }
 
+export interface Participant {
+  uid: string;
+  checkIn: boolean;
+}
+
 export type EventType = "Regular" | "Private";

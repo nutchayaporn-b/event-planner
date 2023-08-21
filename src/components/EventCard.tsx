@@ -33,7 +33,7 @@ export default function EventCard({ event }: EventCardProps) {
   };
 
   const handleManageEvent = () => {
-    setSelectEventState(event)
+    setSelectEventState(event) 
     navigation.navigate("ManageEvent" as never)
   }
 

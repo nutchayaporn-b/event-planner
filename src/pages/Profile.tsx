@@ -29,7 +29,7 @@ export default function Profile() {
   const [gender, setGender] = React.useState(user?.gender);
 
   const [date, setDate] = React.useState<Date | undefined>(
-    new Date(user!.dateOfBirth)
+    new Date(user?.dateOfBirth || new Date())
   );
   const [open, setOpen] = React.useState(false);
 

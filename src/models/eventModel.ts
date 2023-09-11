@@ -2,6 +2,7 @@ import { Timestamp } from "firebase/firestore";
 
 export interface EventModel {
   id?: string;
+  code?: string;
   type?: EventType;
   name?: string;
   description?: string;
@@ -16,11 +17,34 @@ export interface EventModel {
   image?: string;
   createdAt?: Timestamp;
   modifiedAt?: Timestamp;
+  donation?: DonationInfo;
+  participants?: Participant[];
+  donations?: Donation[];
+  messages?: Message[];
+}
+
+export interface DonationInfo {
+  accountNumber: string;
+  holderName: string;
+  bankName: string;
 }
 
 export interface Participant {
   uid: string;
   checkIn: boolean;
 }
+
+export interface Donation {
+  uid: string;
+  amount: string;
+  status: DonationStatus;
+}
+
+export interface Message {
+  uid: string;
+  message: string;
+}
+
+export type DonationStatus = "PENDING" | "APPROVED" | "REJECTED";
 
 export type EventType = "Regular" | "Private";

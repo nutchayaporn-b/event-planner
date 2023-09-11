@@ -27,7 +27,7 @@ export default function CheckIn() {
           <View className="h-4"></View>
           <Text className="text-primary-100 text-xl font-semibold">Check In</Text>
           <View className="h-6"></View>
-          {selectEventState && <SvgQRCode value={selectEventState.id} size={240} />}
+          {selectEventState && <SvgQRCode value={selectEventState.code} size={240} />}
           <View className="h-12"></View>
           <BasicButton onClick={() => handleSeeAllGuests()} buttonClassName="px-6 py-2 bg-primary-800 rounded-3xl" textClassName="text-white">See All Guests</BasicButton>
         </>

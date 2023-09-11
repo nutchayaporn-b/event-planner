@@ -15,7 +15,7 @@ import { useQuery } from "@tanstack/react-query/build/lib/useQuery";
 export default function Organizer() {
   const navigation = useNavigation();
   const { user } = useAuth();
-  const {data: events, isLoading: isEventsLoading} = useQuery(['events'], () => getEventsByUID(user?.uid as string))
+  const {data: events, isLoading: isEventsLoading} = useQuery(['events', user?.uid], () => getEventsByUID(user?.uid as string))
   return (
     <SafeAreaView>
       <ScrollView

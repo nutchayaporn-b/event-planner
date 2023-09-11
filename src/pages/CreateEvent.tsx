@@ -44,16 +44,14 @@ export default function CreateEvent() {
     [setOpen, setDate]
   );
 
-  const [userPosition, setUserPosition] = React.useState(initialRegion);
+  const [userPosition, setUserPosition] = React.useState<any>(null);
   const [markerPosition, setMarkerPosition] = React.useState(createEventState?.location || initialRegion);
-  const [errorMsg, setErrorMsg] = React.useState("");
 
   React.useEffect(() => {
     if(createEventState?.location) return;
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
         return;
       }
 
@@ -70,13 +68,6 @@ export default function CreateEvent() {
       });
     })();
   }, []);
-
-  let text = "Waiting..";
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (userPosition) {
-    text = JSON.stringify(userPosition);
-  }
 
   const handleMapPress = (event: any) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;

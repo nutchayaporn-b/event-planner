@@ -7,12 +7,7 @@ export interface EventModel {
   name?: string;
   description?: string;
   date?: Timestamp;
-  location?: {
-    latitude: number;
-    longitude: number;
-    latitudeDelta: number;
-    longitudeDelta: number;
-  };
+  location?: ILocation;
   locationName?: string;
   image?: string;
   createdAt?: Timestamp;
@@ -21,6 +16,13 @@ export interface EventModel {
   participants?: Participant[];
   donations?: Donation[];
   messages?: Message[];
+}
+
+export interface ILocation {
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
 }
 
 export interface DonationInfo {

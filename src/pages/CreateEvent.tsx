@@ -5,7 +5,7 @@ import IconButton from "../components/IconButton";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { RadioButton } from "react-native-paper";
-import { EventType } from "../models/eventModel";
+import { EventType, ILocation } from "../models/eventModel";
 import TextFieldLabel from "../components/TextFieldLabel";
 import FormLabel from "../components/FormLabel";
 import { DatePickerModal } from "react-native-paper-dates";
@@ -20,7 +20,7 @@ const initialRegion = {
   longitude: 98.9498646,
   latitudeDelta: 0.0922,
   longitudeDelta: 0.0421,
-};
+} as ILocation;
 
 export default function CreateEvent() {
   const navigation = useNavigation();

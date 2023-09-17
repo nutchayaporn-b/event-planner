@@ -16,7 +16,10 @@ import BasicButton from "../components/BasicButton";
 export default function Guest() {
   const navigation = useNavigation();
   const { user } = useAuth();
-  const { data: events, isLoading: isEventsLoading } = useQuery(["events"], () => getPublicEvents());
+  const { data: events, isLoading: isEventsLoading } = useQuery(["events"], async () => {
+    const events = await getPublicEvents();
+    return events.filter((e) => !e.participants?.find((p) => p.uid === user?.uid));
+  });
   return (
     <SafeAreaView>
       <ScrollView className="flex py-4" contentContainerStyle={{ justifyContent: "center", alignItems: "center" }}>

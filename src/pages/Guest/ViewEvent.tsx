@@ -19,13 +19,16 @@ export default function ViewEvent() {
 
   const [selectEventState, setSelectEventState] = useRecoilState(selectEventStore);
 
+  const registeredEvent = selectEventState?.participants?.find((p) => p.uid === user?.uid);
+
   const handleJoinEvent = async () => {
-    if(selectEventState?.participants?.find(p => p.uid === user?.uid)) return Toast.show("You already joined this event", {
-      duration: 3000,
-      textColor: "red",
-      backgroundColor: "white",
-      position: Toast.positions.TOP,
-    });
+    if (registeredEvent)
+      return Toast.show("You already joined this event", {
+        duration: 3000,
+        textColor: "red",
+        backgroundColor: "white",
+        position: Toast.positions.TOP,
+      });
     await joinEventService(selectEventState as EventModel, user?.uid as string);
     Toast.show("Successfully joined event", {
       duration: 3000,
@@ -51,16 +54,21 @@ export default function ViewEvent() {
               <Text className="text-primary-800 text-3xl font-semibold">{selectEventState.name}</Text>
               <Text className="text-primary-100 text-xl font-semibold">{selectEventState.type + " Event"}</Text>
               <View className="h-6"></View>
-              <Pressable
-                onPress={() => handleJoinEvent()}
-                className="flex w-[70%] border-b border-primary-800 border-solid py-4 mt-4"
-              >
-                <Text className="text-3xl text-start font-semibold text-primary-100">Join Event</Text>
-              </Pressable>
-              <NavLine name="Check In" />
-              <NavLine name="Donate" />
-              <NavLine name="Message" />
-              <NavLine name="Agenda" />
+              {!registeredEvent ? (
+                <Pressable
+                  onPress={() => handleJoinEvent()}
+                  className="flex w-[70%] border-b border-primary-800 border-solid py-4 mt-4"
+                >
+                  <Text className="text-3xl text-start font-semibold text-primary-100">Join Event</Text>
+                </Pressable>
+              ) : (
+                <>
+                  <NavLine name="Check In" />
+                  <NavLine name="Donate" />
+                  <NavLine name="Message" />
+                  <NavLine name="Agenda" />
+                </>
+              )}
             </View>
           </ImageBackground>
         ) : (

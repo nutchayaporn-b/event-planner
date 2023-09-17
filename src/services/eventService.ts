@@ -111,3 +111,15 @@ export async function updateDonationStatusService(event: EventModel, donationId:
   console.log("Updated donation status with id: ", event.id);
   return docRef;
 }
+
+export async function sendMessageService(event: EventModel, uid: string, message: string) {
+  const docRef = await setDoc(
+    doc(db, "Events", event.id as string),
+    {
+      messages: [...(event.messages || []), { uid, message, createdAt: new Date() }],
+    },
+    { merge: true }
+  );
+  console.log("Sent message with id: ", event.id);
+  return docRef;
+}

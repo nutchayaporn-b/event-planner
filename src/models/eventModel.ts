@@ -47,6 +47,7 @@ export interface Donation {
 export interface Message {
   uid: string;
   message: string;
+  createdAt: Timestamp;
 }
 
 export type DonationStatus = "PENDING" | "APPROVED" | "REJECTED";

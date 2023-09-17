@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllDonationsByEventId } from "../../services/eventService";
 import { Ionicons } from "@expo/vector-icons";
 import { Donation } from "../../models/eventModel";
+import Spinner from "react-native-loading-spinner-overlay";
 
 export default function SeeAllDonates() {
   const navigation = useNavigation();
@@ -54,7 +55,13 @@ export default function SeeAllDonates() {
           </View>
           <View className="h-4"></View>
           {isDonationsLoading ? (
-            <Text className="text-primary-100 text-xl font-semibold">Loading...</Text>
+            <Spinner
+              visible
+              textContent={"Loading..."}
+              textStyle={{
+                color: "#FFF",
+              }}
+            />
           ) : (
             donations?.map((donation, index) => (
               <Pressable onPress={() => handleViewDonation(donation)}>

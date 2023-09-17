@@ -22,14 +22,17 @@ import CreateEventImage from "./src/pages/Organizer/CreateEventImage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ManageEvent from "./src/pages/Organizer/ManageEvent";
 import CheckIn from "./src/pages/Organizer/CheckIn";
-import ViewEvent from "./src/pages/Guest/ViewEvent";
 import JoinEvent from "./src/pages/JoinEvent";
 import SeeAllGuests from "./src/pages/Organizer/SeeAllGuests";
+import SeeAllDonates from "./src/pages/Organizer/SeeAllDonates";
+import ViewDonation from "./src/pages/Organizer/ViewDonation";
+
+import ViewEvent from "./src/pages/Guest/ViewEvent";
 import RegisterEvent from "./src/pages/Guest/RegisterEvent";
 import GuestCheckIn from "./src/pages/Guest/CheckIn";
 import GuestDonate from "./src/pages/Guest/Donate";
-import SeeAllDonates from "./src/pages/Organizer/SeeAllDonates";
-import ViewDonation from "./src/pages/Organizer/ViewDonation";
+import GuestMessage from './src/pages/Guest/Message';
+import SeeAllMessages from "./src/pages/Organizer/SeeAllMessages";
 
 registerTranslation("en", en);
 
@@ -94,6 +97,7 @@ export default function App() {
               <Stack.Screen name="Guest/RegisterEvent" component={RegisterEvent} />
               <Stack.Screen name="Guest/CheckIn" component={GuestCheckIn} />
               <Stack.Screen name="Guest/Donate" component={GuestDonate} />
+              <Stack.Screen name="Guest/Message" component={GuestMessage}/>
               <Stack.Screen name="Guest/ViewEvent" component={ViewEvent} />
               <Stack.Screen name="Organizer" component={Organizer} />
               <Stack.Screen name="Organizer/CreateEvent" component={CreateEvent} />
@@ -104,6 +108,7 @@ export default function App() {
               <Stack.Screen name="Organizer/SeeAllGuests" component={SeeAllGuests}/>
               <Stack.Screen name="Organizer/SeeAllDonates" component={SeeAllDonates}/>
               <Stack.Screen name="Organizer/ViewDonation" component={ViewDonation}/>
+              <Stack.Screen name="Organizer/Message" component={SeeAllMessages}/>
             </Stack.Navigator>
           </AuthProvider>
         </NavigationContainer>

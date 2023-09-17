@@ -14,15 +14,15 @@ import Profile from "./src/pages/Profile";
 import Home from "./src/pages/Home";
 import Guest from "./src/pages/Guest";
 import Organizer from "./src/pages/Organizer";
-import CreateEvent from "./src/pages/CreateEvent";
+import CreateEvent from "./src/pages/Organizer/CreateEvent";
 import { en, registerTranslation } from "react-native-paper-dates";
-import Test from "./src/pages/Test";
-import Donate from "./src/pages/Donate";
+import Donate from "./src/pages/Organizer/Donate";
 import { RecoilRoot } from "recoil";
-import CreateEventImage from "./src/pages/CreateEventImage";
+import CreateEventImage from "./src/pages/Organizer/CreateEventImage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import ManageEvent from "./src/pages/ManageEvent";
-import CheckIn from "./src/pages/CheckIn";
+import ManageEvent from "./src/pages/Organizer/ManageEvent";
+import CheckIn from "./src/pages/Organizer/CheckIn";
+import ViewEvent from "./src/pages/Guest/ViewEvent";
 registerTranslation("en", en);
 
 const firebaseConfig = {
@@ -82,13 +82,13 @@ export default function App() {
               <Stack.Screen name="Home" component={Home} />
               <Stack.Screen name="Profile" component={Profile} />
               <Stack.Screen name="Guest" component={Guest} />
+              <Stack.Screen name="Guest/ViewEvent" component={ViewEvent} />
               <Stack.Screen name="Organizer" component={Organizer} />
-              <Stack.Screen name="CreateEvent" component={CreateEvent} />
-              <Stack.Screen name="Donate" component={Donate} />
-              <Stack.Screen name="Test" component={Test} />
-              <Stack.Screen name="CreateEventImage" component={CreateEventImage}/>
-              <Stack.Screen name="ManageEvent" component={ManageEvent}/>
-              <Stack.Screen name="Check In" component={CheckIn}/>
+              <Stack.Screen name="Organizer/CreateEvent" component={CreateEvent} />
+              <Stack.Screen name="Organizer/Donate" component={Donate} />
+              <Stack.Screen name="Organizer/CreateEventImage" component={CreateEventImage}/>
+              <Stack.Screen name="Organizer/ManageEvent" component={ManageEvent}/>
+              <Stack.Screen name="Organizer/CheckIn" component={CheckIn}/>
             </Stack.Navigator>
           </AuthProvider>
         </NavigationContainer>

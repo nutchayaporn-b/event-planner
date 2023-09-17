@@ -1,19 +1,19 @@
 import React, { useRef } from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import IconButton from "../components/IconButton";
+import IconButton from "../../components/IconButton";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { RadioButton } from "react-native-paper";
-import { EventType, ILocation } from "../models/eventModel";
-import TextFieldLabel from "../components/TextFieldLabel";
-import FormLabel from "../components/FormLabel";
+import { EventType, ILocation } from "../../models/eventModel";
+import TextFieldLabel from "../../components/TextFieldLabel";
+import FormLabel from "../../components/FormLabel";
 import { DatePickerModal } from "react-native-paper-dates";
-import BasicButton from "../components/BasicButton";
+import BasicButton from "../../components/BasicButton";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import { useRecoilState } from "recoil";
-import { createEventStore } from "../stores/eventStore";
+import { createEventStore } from "../../stores/eventStore";
 
 const initialRegion = {
   latitude: 18.7999965,

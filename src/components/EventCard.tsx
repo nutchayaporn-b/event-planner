@@ -14,9 +14,10 @@ import { selectEventStore } from "../stores/eventStore";
 
 export interface EventCardProps {
   event: EventModel;
+  view: "GUEST" | "ORGANIZER";
 }
 
-export default function EventCard({ event }: EventCardProps) {
+export default function EventCard({ event, view }: EventCardProps) {
 
   const navigation = useNavigation();
 
@@ -32,14 +33,14 @@ export default function EventCard({ event }: EventCardProps) {
     await Clipboard.setStringAsync(event?.id || "");
   };
 
-  const handleManageEvent = () => {
+  const handleClickEvent = () => {
     setSelectEventState(event) 
-    navigation.navigate("ManageEvent" as never)
+    navigation.navigate((view === "GUEST" ? "Guest/ViewEvent" : "Organizer/ManageEvent") as never);
   }
 
   return (
     <View className="flex w-[95%] items-center border-b-2 py-4 border-primary-800 border-solid relative">
-      <Pressable onPress={() => handleManageEvent()}>
+      <Pressable onPress={() => handleClickEvent()}>
         {event.image && <Image source={{ uri: event.image }} className="w-[300px] h-[300px] object-cover" />}
       </Pressable>
       {event.type === "Private" && 
@@ -49,7 +50,7 @@ export default function EventCard({ event }: EventCardProps) {
           onPress={() => copyToClipboard()}
         />
       }
-      <Pressable onPress={() => handleManageEvent()}>
+      <Pressable onPress={() => handleClickEvent()}>
       <View className="flex w-4/5 relative">
         {/* <IconButton icon={<AntDesign name="edit" size={24} color="black" />} buttonClassName="absolute right-0 top-6" onPress={() => navigation.navigate("EditEvent")} /> */}
         <Text className="text-primary-800 mt-4 text-xl font-semibold">{event.name}</Text>

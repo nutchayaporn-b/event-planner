@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, ImageBackground, Pressable } from "react-native";
-import IconButton from "../components/IconButton";
+import IconButton from "../../components/IconButton";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { useRecoilState } from "recoil";
-import { selectEventStore } from "../stores/eventStore";
+import { selectEventStore } from "../../stores/eventStore";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ManageEvent() {
@@ -44,7 +44,7 @@ function NavLine({ name }: { name: string }) {
   const navigation = useNavigation();
   return (
     <Pressable
-      onPress={() => navigation.navigate(`${name}` as never)}
+      onPress={() => navigation.navigate(`Organizer/${name.replaceAll(' ', '')}` as never)}
       className="flex w-[70%] border-b border-primary-800 border-solid py-4 mt-4"
     >
       <Text className="text-3xl text-start font-semibold text-primary-100">{name}</Text>

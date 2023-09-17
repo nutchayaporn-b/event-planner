@@ -1,16 +1,16 @@
 import React from "react";
 import { View, Text, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import IconButton from "../components/IconButton";
+import IconButton from "../../components/IconButton";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import FormLabel from "../components/FormLabel";
-import BasicButton from "../components/BasicButton";
-import { selectEventStore } from "../stores/eventStore";
+import FormLabel from "../../components/FormLabel";
+import BasicButton from "../../components/BasicButton";
+import { selectEventStore } from "../../stores/eventStore";
 import { useRecoilState } from "recoil";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { EventModel } from "../models/eventModel";
-import { updateEventService } from "../services/eventService";
+import { EventModel } from "../../models/eventModel";
+import { updateEventService } from "../../services/eventService";
 
 export default function Donate() {
   const queryClient = useQueryClient();

@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import IconButton from "../components/IconButton";
+import IconButton from "../../components/IconButton";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import SvgQRCode from "react-native-qrcode-svg";
 import { useRecoilState } from "recoil";
-import { selectEventStore } from "../stores/eventStore";
-import BasicButton from "../components/BasicButton";
+import { selectEventStore } from "../../stores/eventStore";
+import BasicButton from "../../components/BasicButton";
 export default function CheckIn() {
   const navigation = useNavigation();
   const [selectEventState, setSelectEventState] = useRecoilState(selectEventStore);

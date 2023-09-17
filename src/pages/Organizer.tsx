@@ -11,6 +11,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { getEventsByUID } from "../services/eventService";
 import { EventModel } from "../models/eventModel";
 import { useQuery } from "@tanstack/react-query/build/lib/useQuery";
+import Spinner from "react-native-loading-spinner-overlay";
 
 export default function Organizer() {
   const navigation = useNavigation();
@@ -30,12 +31,17 @@ export default function Organizer() {
           icon={<AntDesign name="left" size={24} color="white" />}
           buttonClassName="px-2 py-2 bg-primary-800 rounded-full z-[9999] absolute top-2 left-8"
         />
-        {isEventsLoading && <Text>Loading...</Text>}
-        {events && 
-          events.map(e => (
-            <EventCard key={e.id} event={e}/>
-          ))
-        }
+        {isEventsLoading ? (
+          <Spinner
+            visible
+            textContent={"Loading..."}
+            textStyle={{
+              color: "#FFF",
+            }}
+          />
+        ) : (
+          events && events.map((e) => <EventCard key={e.id} event={e} view="ORGANIZER" />)
+        )}
         <AddEventCard />
         <IconButton
           icon={<Ionicons name="person" size={24} color="white" />}

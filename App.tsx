@@ -23,6 +23,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ManageEvent from "./src/pages/Organizer/ManageEvent";
 import CheckIn from "./src/pages/Organizer/CheckIn";
 import ViewEvent from "./src/pages/Guest/ViewEvent";
+import JoinEvent from "./src/pages/JoinEvent";
+import RegisterEvent from "./src/pages/Guest/RegisterEvent";
 registerTranslation("en", en);
 
 const firebaseConfig = {
@@ -81,7 +83,9 @@ export default function App() {
               <Stack.Screen name="Register" component={Register} />
               <Stack.Screen name="Home" component={Home} />
               <Stack.Screen name="Profile" component={Profile} />
+              <Stack.Screen name="JoinEvent" component={JoinEvent} />
               <Stack.Screen name="Guest" component={Guest} />
+              <Stack.Screen name="Guest/RegisterEvent" component={RegisterEvent} />
               <Stack.Screen name="Guest/ViewEvent" component={ViewEvent} />
               <Stack.Screen name="Organizer" component={Organizer} />
               <Stack.Screen name="Organizer/CreateEvent" component={CreateEvent} />

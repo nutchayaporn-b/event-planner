@@ -31,6 +31,7 @@ export default function Organizer() {
           icon={<AntDesign name="left" size={24} color="white" />}
           buttonClassName="px-2 py-2 bg-primary-800 rounded-full z-[9999] absolute top-2 left-8"
         />
+        <View className="h-4"></View>
         {isEventsLoading ? (
           <Spinner
             visible
@@ -48,7 +49,7 @@ export default function Organizer() {
           buttonClassName="px-2 py-2 bg-primary-800 absolute top-2 right-8"
           onPress={() => navigation.navigate("Profile" as never)}
         />
-        <View className="h-8"></View>
+        <View className="h-12"></View>
       </ScrollView>
     </SafeAreaView>
   );

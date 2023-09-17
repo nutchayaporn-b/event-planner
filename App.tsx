@@ -33,6 +33,8 @@ import GuestCheckIn from "./src/pages/Guest/CheckIn";
 import GuestDonate from "./src/pages/Guest/Donate";
 import GuestMessage from './src/pages/Guest/Message';
 import SeeAllMessages from "./src/pages/Organizer/SeeAllMessages";
+import EditEvent from "./src/pages/Organizer/EditEvent";
+import EditEventImage from "./src/pages/Organizer/EditEventImage";
 
 registerTranslation("en", en);
 
@@ -109,6 +111,8 @@ export default function App() {
               <Stack.Screen name="Organizer/SeeAllDonates" component={SeeAllDonates}/>
               <Stack.Screen name="Organizer/ViewDonation" component={ViewDonation}/>
               <Stack.Screen name="Organizer/Message" component={SeeAllMessages}/>
+              <Stack.Screen name="Organizer/EditEvent" component={EditEvent}/>
+              <Stack.Screen name="Organizer/EditEventImage" component={EditEventImage}/>
             </Stack.Navigator>
           </AuthProvider>
         </NavigationContainer>

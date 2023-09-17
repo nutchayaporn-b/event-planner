@@ -18,7 +18,6 @@ export interface EventCardProps {
 }
 
 export default function EventCard({ event, view }: EventCardProps) {
-
   const navigation = useNavigation();
 
   const [selectEventState, setSelectEventState] = useRecoilState(selectEventStore);
@@ -34,26 +33,36 @@ export default function EventCard({ event, view }: EventCardProps) {
   };
 
   const handleClickEvent = () => {
-    setSelectEventState(event) 
+    setSelectEventState(event);
     navigation.navigate((view === "GUEST" ? "Guest/ViewEvent" : "Organizer/ManageEvent") as never);
-  }
+  };
 
   return (
     <View className="flex w-[95%] items-center border-b-2 py-4 border-primary-800 border-solid relative">
       <Pressable onPress={() => handleClickEvent()}>
         {event.image && <Image source={{ uri: event.image }} className="w-[300px] h-[300px] object-cover" />}
       </Pressable>
-      {event.type === "Private" && 
+      {event.type === "Private" && (
         <IconButton
           icon={<EvilIcons name="share-apple" size={36} color="white" />}
           buttonClassName="bg-primary-800 flex items-center justify-center rounded-full px-1 py-2 absolute right-[20px] top-24"
           onPress={() => copyToClipboard()}
         />
-      }
-      <Pressable onPress={() => handleClickEvent()}>
+      )}
       <View className="flex w-4/5 relative">
-        {/* <IconButton icon={<AntDesign name="edit" size={24} color="black" />} buttonClassName="absolute right-0 top-6" onPress={() => navigation.navigate("EditEvent")} /> */}
-        <Text className="text-primary-800 mt-4 text-xl font-semibold">{event.name}</Text>
+        <View className="flex flex-row justify-between">
+          <Text className="text-primary-800 mt-4 text-xl font-semibold">{event.name}</Text>
+          {view === "ORGANIZER" && (
+            <IconButton
+              icon={<AntDesign name="edit" size={24} color="black" />}
+              buttonClassName="right-0 top-6"
+              onPress={() => {
+                setSelectEventState(event);
+                navigation.navigate("Organizer/EditEvent" as never)
+              }}
+            />
+          )}
+        </View>
         {event.description && <Text className="text-primary-100 mt-2 text-lg mb-1">{event.description}</Text>}
         <Text className="text-primary-100 text-lg mb-1">{moment(event.date?.toDate()).format("MMMM Do YYYY")}</Text>
         <View className="flex flex-row items-center">
@@ -61,7 +70,6 @@ export default function EventCard({ event, view }: EventCardProps) {
           <Text className="text-primary-100 text-[14px">{event.locationName}</Text>
         </View>
       </View>
-      </Pressable>
     </View>
   );
 }

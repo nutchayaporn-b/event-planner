@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { selectEventStore } from "../../stores/eventStore";
 import { useRecoilState } from "recoil";
@@ -34,7 +34,8 @@ export default function SeeAllGuests() {
   );
 
   return (
-    <SafeAreaView className="flex-1 items-center">
+    <SafeAreaView>
+      <ScrollView className="flex py-4" contentContainerStyle={{ alignItems: "center" }}>
       <IconButton
         onPress={() => navigation.goBack()}
         icon={<AntDesign name="left" size={24} color="white" />}
@@ -100,6 +101,7 @@ export default function SeeAllGuests() {
           </Text>
         </View>
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

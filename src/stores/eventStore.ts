@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { EventModel } from "../models/eventModel";
+import { Donation, EventModel } from "../models/eventModel";
 
 const createEventStore = atom<EventModel | null>({
     key: 'CreateEventStore',
@@ -11,4 +11,9 @@ const selectEventStore = atom<EventModel | null>({
     default: null
 })
 
-export {createEventStore, selectEventStore};
+const selectDonationStore = atom<Donation | null>({
+    key: 'SelectDonationStore',
+    default: null
+})
+
+export {createEventStore, selectEventStore, selectDonationStore};

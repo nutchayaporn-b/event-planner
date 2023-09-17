@@ -1,6 +1,6 @@
 import { doc, setDoc, getDoc, addDoc, collection, getDocs, query, where, limit } from "firebase/firestore";
 import { db } from "../../App";
-import { EventModel } from "../models/eventModel";
+import { Donation, EventModel } from "../models/eventModel";
 import { generateUniqueId } from "../utils/common";
 
 export async function createEvent(event: EventModel, uid: string) {
@@ -41,12 +41,18 @@ export async function getRegisteredEvents(uid: string): Promise<EventModel[]> {
   const docRef = await getDocs(
     query(
       collection(db, "Events"),
-      where("participants", "array-contains-any", 
-        [{ uid, checkIn: false }, { uid, checkIn: true }]
-      )
+      where("participants", "array-contains-any", [
+        { uid, checkIn: false },
+        { uid, checkIn: true },
+      ])
     )
   );
   return docRef.docs.map((d) => d.data());
+}
+
+export async function getAllDonationsByEventId(eventId: string): Promise<Donation[]> {
+  const docRef = await getDoc(doc(db, "Events", eventId));
+  return docRef.data()?.donations || [];
 }
 
 export async function updateEventService(event: EventModel) {
@@ -71,13 +77,37 @@ export async function joinEventService(event: EventModel, uid: string) {
 }
 
 export async function checkInEventService(event: EventModel, uid: string) {
-    const docRef = await setDoc(
-        doc(db, "Events", event.id as string),
-        {
-        participants: event.participants?.map((p) => (p.uid === uid ? { ...p, checkIn: true } : p)),
-        },
-        { merge: true }
-    );
-    console.log("Checked in event with id: ", event.id);
-    return docRef;
-    }
+  const docRef = await setDoc(
+    doc(db, "Events", event.id as string),
+    {
+      participants: event.participants?.map((p) => (p.uid === uid ? { ...p, checkIn: true } : p)),
+    },
+    { merge: true }
+  );
+  console.log("Checked in event with id: ", event.id);
+  return docRef;
+}
+
+export async function donateEventService(event: EventModel, uid: string, name: string, image: string, amount: string) {
+  const docRef = await setDoc(
+    doc(db, "Events", event.id as string),
+    {
+      donations: [...(event.donations || []), { uid, name, image, amount, status: "PENDING" }],
+    },
+    { merge: true }
+  );
+  console.log("Donated event with id: ", event.id);
+  return docRef;
+}
+
+export async function updateDonationStatusService(event: EventModel, donationId: string, status: string) {
+  const docRef = await setDoc(
+    doc(db, "Events", event.id as string),
+    {
+      donations: event.donations?.map((d) => (d.uid === donationId ? { ...d, status } : d)),
+    },
+    { merge: true }
+  );
+  console.log("Updated donation status with id: ", event.id);
+  return docRef;
+}

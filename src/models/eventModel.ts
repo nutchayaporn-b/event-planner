@@ -38,7 +38,9 @@ export interface Participant {
 
 export interface Donation {
   uid: string;
-  amount: string;
+  name: string;
+  image: string;
+  amount: number;
   status: DonationStatus;
 }
 

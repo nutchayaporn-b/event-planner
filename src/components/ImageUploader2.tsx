@@ -14,7 +14,7 @@ export default function ImageUploader2({
   setImage,
   isEdit = true,
   render,
-}: ImageUploaderProps) {
+}: ImageUploader2Props) {
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({

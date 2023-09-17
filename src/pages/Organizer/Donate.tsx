@@ -11,6 +11,7 @@ import { useRecoilState } from "recoil";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { EventModel } from "../../models/eventModel";
 import { updateEventService } from "../../services/eventService";
+import Toast from "react-native-root-toast";
 
 export default function Donate() {
   const queryClient = useQueryClient();
@@ -19,7 +20,6 @@ export default function Donate() {
   const [accountNumber, setAccountNumber] = React.useState(selectEventState?.donation?.accountNumber || "");
   const [name, setName] = React.useState(selectEventState?.donation?.holderName || "");
   const [bank, setBank] = React.useState(selectEventState?.donation?.bankName || "");
-  const [pageState, setPageState] = React.useState<"VIEW" | "EDIT">("VIEW");
 
   const { mutate: updateEventMutate } = useMutation((event: EventModel) => updateEventService(event), {
     onSuccess: () => {
@@ -37,7 +37,15 @@ export default function Donate() {
         holderName: name,
       },
     });
-    setPageState("VIEW");
+    Toast.show("Saved donation info", {
+      duration: Toast.durations.LONG,
+      position: Toast.positions.CENTER,
+      backgroundColor: "#4caf50",
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+    });
   };
 
   return (
@@ -68,15 +76,15 @@ export default function Donate() {
       <BasicButton
         textClassName="text-white"
         buttonClassName="w-2/3 flex items-center py-2 bg-primary-800 rounded-3xl"
-        onClick={() => (pageState === "VIEW" ? setPageState("EDIT") : handleSave())}
+        onClick={() => handleSave()}
       >
-        {pageState === "VIEW" ? "EDIT" : "SAVE"}
+        SAVE
       </BasicButton>
       <View className="h-4"></View>
       <BasicButton
         textClassName="text-white"
         buttonClassName="w-2/3 flex items-center py-2 bg-primary-800 rounded-3xl"
-        onClick={() => console.log("see a")}
+        onClick={() => navigation.navigate("Organizer/SeeAllDonates" as never)}
       >
         See All Donates
       </BasicButton>

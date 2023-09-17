@@ -29,7 +29,7 @@ export default function EventCard({ event, view }: EventCardProps) {
       backgroundColor: "white",
       position: Toast.positions.TOP,
     });
-    await Clipboard.setStringAsync(event?.id || "");
+    await Clipboard.setStringAsync(event?.code || "");
   };
 
   const handleClickEvent = () => {

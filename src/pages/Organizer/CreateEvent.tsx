@@ -85,7 +85,7 @@ export default function CreateEvent() {
     })
     console.log(createEventState)
     //@ts-ignore
-    navigation.navigate('CreateEventImage')
+    navigation.navigate('Organizer/CreateEventImage')
   };
 
   return (

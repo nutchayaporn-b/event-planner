@@ -13,7 +13,7 @@ export default function AddEventCard({}: AddEventCardProps) {
 
   return (
     <View className="flex w-4/5 border-b border-solid border-primary-200 items-center pb-4">
-      <Pressable onPress={() => navigation.navigate("CreateEvent")}>
+      <Pressable onPress={() => navigation.navigate("Organizer/CreateEvent" as never)}>
         <Ionicons name="add" size={90} color="#9E9A96" />
         <Text className="text-primary-100 text-2xl">Add Event</Text>
       </Pressable>

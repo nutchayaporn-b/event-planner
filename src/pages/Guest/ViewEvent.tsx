@@ -36,7 +36,7 @@ export default function ViewEvent() {
       backgroundColor: "white",
       position: Toast.positions.TOP,
     });
-    navigation.navigate("Guest" as never);
+    navigation.navigate("Guest/RegisterEvent" as never);
     queryClient.invalidateQueries(["events"]);
   };
 

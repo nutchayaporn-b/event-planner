@@ -26,6 +26,7 @@ import ViewEvent from "./src/pages/Guest/ViewEvent";
 import JoinEvent from "./src/pages/JoinEvent";
 import RegisterEvent from "./src/pages/Guest/RegisterEvent";
 import GuestCheckIn from "./src/pages/Guest/CheckIn";
+import SeeAllGuests from "./src/pages/Organizer/SeeAllGuests";
 registerTranslation("en", en);
 
 const firebaseConfig = {
@@ -95,6 +96,7 @@ export default function App() {
               <Stack.Screen name="Organizer/CreateEventImage" component={CreateEventImage}/>
               <Stack.Screen name="Organizer/ManageEvent" component={ManageEvent}/>
               <Stack.Screen name="Organizer/CheckIn" component={CheckIn}/>
+              <Stack.Screen name="Organizer/SeeAllGuests" component={SeeAllGuests}/>
             </Stack.Navigator>
           </AuthProvider>
         </NavigationContainer>

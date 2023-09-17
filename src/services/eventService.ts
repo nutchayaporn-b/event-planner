@@ -69,3 +69,15 @@ export async function joinEventService(event: EventModel, uid: string) {
   console.log("Joined event with id: ", event.id);
   return docRef;
 }
+
+export async function checkInEventService(event: EventModel, uid: string) {
+    const docRef = await setDoc(
+        doc(db, "Events", event.id as string),
+        {
+        participants: event.participants?.map((p) => (p.uid === uid ? { ...p, checkIn: true } : p)),
+        },
+        { merge: true }
+    );
+    console.log("Checked in event with id: ", event.id);
+    return docRef;
+    }

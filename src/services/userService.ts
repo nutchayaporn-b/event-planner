@@ -30,6 +30,14 @@ export async function getFullUser(user: User): Promise<FullUser> {
   };
 }
 
+export async function getUserByUID(uid: string): Promise<FullUser> {
+  const docRef = await getDoc(doc(db, "Users", uid));
+  //@ts-ignore
+  return {
+    ...docRef.data(),
+  };
+}
+
 export async function saveFullUser(user: FullUser) {
   const docRef = await getDoc(doc(db, "Users", user.uid));
   if (docRef.exists()) {

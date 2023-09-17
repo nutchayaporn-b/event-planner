@@ -8,12 +8,13 @@ import SvgQRCode from "react-native-qrcode-svg";
 import { useRecoilState } from "recoil";
 import { selectEventStore } from "../../stores/eventStore";
 import BasicButton from "../../components/BasicButton";
+import Spinner from "react-native-loading-spinner-overlay";
 export default function CheckIn() {
   const navigation = useNavigation();
   const [selectEventState, setSelectEventState] = useRecoilState(selectEventStore);
   const handleSeeAllGuests = () => {
-    navigation.navigate("SeeAllGuests" as never)
-  }
+    navigation.navigate("Organizer/SeeAllGuests" as never);
+  };
   return (
     <SafeAreaView className="flex-1 items-center justify-center">
       <IconButton
@@ -29,9 +30,23 @@ export default function CheckIn() {
           <View className="h-6"></View>
           {selectEventState && <SvgQRCode value={selectEventState.code} size={240} />}
           <View className="h-12"></View>
-          <BasicButton onClick={() => handleSeeAllGuests()} buttonClassName="px-6 py-2 bg-primary-800 rounded-3xl" textClassName="text-white">See All Guests</BasicButton>
+          <BasicButton
+            onClick={() => handleSeeAllGuests()}
+            buttonClassName="px-6 py-2 bg-primary-800 rounded-3xl"
+            textClassName="text-white"
+          >
+            See All Guests
+          </BasicButton>
         </>
-      ) : <Text>Loading...</Text>}
+      ) : (
+        <Spinner
+          visible
+          textContent={"Loading..."}
+          textStyle={{
+            color: "#FFF",
+          }}
+        />
+      )}
     </SafeAreaView>
   );
 }

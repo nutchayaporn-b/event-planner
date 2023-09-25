@@ -35,6 +35,7 @@ import GuestMessage from './src/pages/Guest/Message';
 import SeeAllMessages from "./src/pages/Organizer/SeeAllMessages";
 import EditEvent from "./src/pages/Organizer/EditEvent";
 import EditEventImage from "./src/pages/Organizer/EditEventImage";
+import Agenda from "./src/pages/Organizer/Agenda";
 
 registerTranslation("en", en);
 
@@ -113,6 +114,7 @@ export default function App() {
               <Stack.Screen name="Organizer/Message" component={SeeAllMessages}/>
               <Stack.Screen name="Organizer/EditEvent" component={EditEvent}/>
               <Stack.Screen name="Organizer/EditEventImage" component={EditEventImage}/>
+              <Stack.Screen name="Organizer/Agenda" component={Agenda}/>
             </Stack.Navigator>
           </AuthProvider>
         </NavigationContainer>

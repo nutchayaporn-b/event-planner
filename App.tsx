@@ -26,16 +26,17 @@ import JoinEvent from "./src/pages/JoinEvent";
 import SeeAllGuests from "./src/pages/Organizer/SeeAllGuests";
 import SeeAllDonates from "./src/pages/Organizer/SeeAllDonates";
 import ViewDonation from "./src/pages/Organizer/ViewDonation";
+import SeeAllMessages from "./src/pages/Organizer/SeeAllMessages";
+import EditEvent from "./src/pages/Organizer/EditEvent";
+import EditEventImage from "./src/pages/Organizer/EditEventImage";
+import Agenda from "./src/pages/Organizer/Agenda";
 
 import ViewEvent from "./src/pages/Guest/ViewEvent";
 import RegisterEvent from "./src/pages/Guest/RegisterEvent";
 import GuestCheckIn from "./src/pages/Guest/CheckIn";
 import GuestDonate from "./src/pages/Guest/Donate";
 import GuestMessage from "./src/pages/Guest/Message";
-import SeeAllMessages from "./src/pages/Organizer/SeeAllMessages";
-import EditEvent from "./src/pages/Organizer/EditEvent";
-import EditEventImage from "./src/pages/Organizer/EditEventImage";
-import Agenda from "./src/pages/Organizer/Agenda";
+import GuestAgenda from "./src/pages/Guest/Agenda";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
 
 registerTranslation("en", en);
@@ -110,6 +111,7 @@ export default function App() {
                   <Stack.Screen name="Guest/Donate" component={GuestDonate} />
                   <Stack.Screen name="Guest/Message" component={GuestMessage} />
                   <Stack.Screen name="Guest/ViewEvent" component={ViewEvent} />
+                  <Stack.Screen name="Guest/Agenda" component={GuestAgenda} />
                   <Stack.Screen name="Organizer" component={Organizer} />
                   <Stack.Screen
                     name="Organizer/CreateEvent"

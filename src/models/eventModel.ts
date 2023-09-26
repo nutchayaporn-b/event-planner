@@ -16,6 +16,7 @@ export interface EventModel {
   participants?: Participant[];
   donations?: Donation[];
   messages?: Message[];
+  agendas?: Agenda[];
 }
 
 export interface ILocation {
@@ -48,6 +49,12 @@ export interface Message {
   uid: string;
   message: string;
   createdAt: Timestamp;
+}
+
+export interface Agenda {
+  id: string;
+  time: string;
+  description: string;
 }
 
 export type DonationStatus = "PENDING" | "APPROVED" | "REJECTED";

@@ -1,6 +1,6 @@
 import { doc, setDoc, getDoc, addDoc, collection, getDocs, query, where, limit } from "firebase/firestore";
 import { db } from "../../App";
-import { Donation, EventModel } from "../models/eventModel";
+import { Agenda, Donation, EventModel } from "../models/eventModel";
 import { generateUniqueId } from "../utils/common";
 
 export async function createEvent(event: EventModel, uid: string) {
@@ -121,5 +121,17 @@ export async function sendMessageService(event: EventModel, uid: string, message
     { merge: true }
   );
   console.log("Sent message with id: ", event.id);
+  return docRef;
+}
+
+export async function updateAgendasService(event: EventModel, agendas: Agenda[]) {
+  const docRef = await setDoc(
+    doc(db, "Events", event.id as string),
+    {
+      agendas: agendas,
+    },
+    { merge: true }
+  );
+  console.log("Updated agendas with id: ", event.id, agendas);
   return docRef;
 }

@@ -16,6 +16,7 @@ import { EventModel } from "../../models/eventModel";
 import Toast from "react-native-root-toast";
 import { useQueryClient } from "@tanstack/react-query/build/lib/QueryClientProvider";
 import * as Location from "expo-location";
+import { schedulePushNotification } from "../../utils/noti";
 
 export default function CreateEventImage() {
   const queryClient = useQueryClient();
@@ -59,6 +60,7 @@ export default function CreateEventImage() {
           position: Toast.positions.TOP,
         }
       );
+      schedulePushNotification("Event created", "Your event has been created" + createEventState?.code, null, 2);
       setCreateEventState(null);
       queryClient.invalidateQueries(['events'])
       //@ts-ignore

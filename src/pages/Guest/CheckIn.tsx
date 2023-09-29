@@ -11,6 +11,7 @@ import BasicButton from "../../components/BasicButton";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { checkInEventService } from "../../services/eventService";
 import { useAuth } from "../../contexts/AuthContext";
+import { schedulePushNotification } from "../../utils/noti";
 export default function CheckIn() {
   const navigation = useNavigation();
   const {user} = useAuth();
@@ -32,6 +33,7 @@ export default function CheckIn() {
     if(data == selectEventState?.code) {
       await checkInEventService(selectEventState as any, user?.uid as string);
       alert(`Check in successful!`);
+      await schedulePushNotification("Event " + selectEventState?.name , "You have checked in successfully!", null, 2)
       navigation.navigate("Guest/ViewEvent" as never);
     }
     else {

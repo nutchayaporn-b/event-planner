@@ -60,7 +60,7 @@ export default function CreateEventImage() {
           position: Toast.positions.TOP,
         }
       );
-      schedulePushNotification("Event created", "Your event has been created" + createEventState?.code, null, 2);
+      schedulePushNotification("Event created", "Your event has been created " + createEventState?.name, null, 2);
       setCreateEventState(null);
       queryClient.invalidateQueries(['events'])
       //@ts-ignore

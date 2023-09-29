@@ -11,6 +11,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { EventModel } from "../../models/eventModel";
 import Toast from "react-native-root-toast";
 import { useQueryClient } from "@tanstack/react-query";
+import { schedulePushNotification } from "../../utils/noti";
 
 export default function ViewEvent() {
   const navigation = useNavigation();
@@ -36,6 +37,7 @@ export default function ViewEvent() {
       backgroundColor: "white",
       position: Toast.positions.TOP,
     });
+    await schedulePushNotification("Event " + selectEventState?.name , "You have joined successfully!", null, 2)
     navigation.navigate("Guest/RegisterEvent" as never);
     queryClient.invalidateQueries(["events"]);
   };
